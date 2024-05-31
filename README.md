@@ -15,10 +15,10 @@ SecureCrawler is suitable for security researchers, bug bounty hunters, and deve
 
 Feel free to adjust or expand upon this description as needed for your project!
 
-# go run main.go -d http://testphp.vulnweb.com/ -depth 1
-# go run main.go -f urls.txt -depth 1
+## go run main.go -d http://testphp.vulnweb.com/ -depth 1
+## go run main.go -f urls.txt -depth 1
 
-# or
+## or
 
 
 
