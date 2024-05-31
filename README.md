@@ -14,3 +14,11 @@ User Interface: Offers a clean and intuitive interface for easy interaction and 
 SecureCrawler is suitable for security researchers, bug bounty hunters, and developers seeking to analyze website structures, identify potential vulnerabilities, and enhance overall web security.
 
 Feel free to adjust or expand upon this description as needed for your project!
+
+# go run main.go -d http://testphp.vulnweb.com/ -depth 1
+# go run main.go -f urls.txt -depth 1
+
+# or
+
+
+
