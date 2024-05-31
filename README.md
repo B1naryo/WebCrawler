@@ -15,10 +15,15 @@ SecureCrawler is suitable for security researchers, bug bounty hunters, and deve
 
 Feel free to adjust or expand upon this description as needed for your project!
 
-## go run main.go -d http://testphp.vulnweb.com/ -depth 1
-## go run main.go -f urls.txt -depth 1
+# WebCrawler in go:
+go run main.go -d http://testphp.vulnweb.com/ -depth 1 \
+go run main.go -f urls.txt -depth 1
 
-## or
+# WebCrawler in python:
+python3 WebCrawler -f urls.txt -t 10 \
+python3 WebCrawler -f urls.txt -t 10 -p 10 \
+python3 WebCrawler -d http://testphp.vulnweb.com/ -t 10 \
+python3 WebCrawler -f http://testphp.vulnweb.com/ -t 10 -p 10
 
 
 
