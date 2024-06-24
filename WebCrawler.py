@@ -25,6 +25,11 @@ def extrair_urls(url, page_content, domain):
 
 def worker(queue, urls_visitadas, lock, domain, max_profundidade):
     session = requests.Session()
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Referer': ''
+    }
+    
     while True:
         url_atual, profundidade_atual = queue.get()
         if profundidade_atual > max_profundidade:
@@ -37,7 +42,7 @@ def worker(queue, urls_visitadas, lock, domain, max_profundidade):
             urls_visitadas.add(url_atual)
 
         try:
-            response = session.get(url_atual)
+            response = session.get(url_atual, headers=headers)
             response.raise_for_status()
             page_content = response.text
 
@@ -61,6 +66,11 @@ def worker(queue, urls_visitadas, lock, domain, max_profundidade):
 def crawl_paginas(url, max_profundidade=3, num_threads=4):
     urls_visitadas = set()
     queue = Queue()
+
+    # Verifica se a URL tem um esquema (http:// ou https://), adiciona https:// se não tiver
+    if not urlparse(url).scheme:
+        url = "https://" + url
+
     queue.put((url, 0))
     parsed_url = urlparse(url)
     domain = parsed_url.netloc  # Extrai o domínio da URL inicial
@@ -80,7 +90,7 @@ def main():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("-d", "--domain", type=str, help="URL única para rastrear")
     group.add_argument("-f", "--file", type=str, help="Arquivo contendo URLs para rastrear")
-    parser.add_argument("-p", "--profundidade", type=int, default=5, help="Profundidade máxima de rastreamento")
+    parser.add_argument("-p", "--profundidade", type=int, default=10, help="Profundidade máxima de rastreamento")
     parser.add_argument("-t", "--threads", type=int, default=4, help="Número de threads para rastreamento")
 
     args = parser.parse_args()
