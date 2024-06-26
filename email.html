@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de E-mails Aleatórios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="number"], button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        button {
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            font-family: monospace;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+    </style>
+    <script>
+        function generateRandomEmail() {
+            var domains = ['hotmail.com'];
+            var letters = 'abcdefghijklmnopqrstuvwxyz';
+            var username = '';
+
+            // Gerar um username aleatório de 10 caracteres
+            for (var i = 0; i < 10; i++) {
+                username += letters.charAt(Math.floor(Math.random() * letters.length));
+            }
+
+            var domain = domains[Math.floor(Math.random() * domains.length)];
+            return username + '@' + domain;
+        }
+
+        function generateEmails() {
+            var numEmails = parseInt(document.getElementById('quantity').value);
+            var result = '';
+
+            // Gerar os novos emails
+            for (var i = 0; i < numEmails; i++) {
+                var email = generateRandomEmail();
+                result += email + '\n'; // Adiciona quebra de linha entre emails
+            }
+
+            // Exibir os emails gerados na caixa de texto
+            document.getElementById('emails').value = result;
+        }
+
+        function copyEmails() {
+            var emails = document.getElementById('emails');
+            
+            // Selecionar todo o texto na caixa de texto
+            emails.select();
+            emails.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+            // Copiar para a área de transferência
+            document.execCommand('copy');
+            alert('E-mails copiados para a área de transferência!');
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Gerador de E-mails Aleatórios</h2>
+        <label for="quantity">Quantidade de E-mails:</label>
+        <input type="number" id="quantity" name="quantity" value="10" min="1" max="1000">
+        <br>
+        <button onclick="generateEmails()">Gerar E-mails</button>
+        <button onclick="copyEmails()">Copiar E-mails</button>
+        <br>
+        <textarea id="emails" readonly placeholder="E-mails gerados serão exibidos aqui..."></textarea>
+    </div>
+</body>
+</html>
+
