@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Técnicas Avançadas: Identificando Vulnerabilidades de Injeção SQL em Sites através do SQLMap</title>
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="container">
+    <h1>GOOGLE HACKING: Utilizando a Técnica para Reconhecimento</h1>
+<h2>Descubra Informações com Eficiência</h2>
+<p>Utilizando a técnica de "Google Hacking", é possível realizar um reconhecimento eficaz na busca por informações específicas. Por exemplo:</p>
+
+<pre>site:www.foo.com certificações</pre>
+<p>Este comando específico do Google executa uma pesquisa direcionada para resultados exclusivamente dentro do site www.foo.com e que contenham o termo "certificações".</p>
+<p>
+Isso significa que os resultados retornados serão páginas específicas dentro do domínio www.foo.com que contenham a palavra "certificações". Essas páginas podem incluir informações sobre certificações oferecidas pelo site, detalhes sobre programas de certificação, artigos relacionados a certificações, entre outros conteúdos que estejam dentro do escopo do site www.foo.com e que mencionem o termo "certificações".
+</p>
+<pre>site:www.foo.com intitle:penetration testing</pre>
+
+<p>Este comando faz uma pesquisa específica no Google utilizando operadores avançados. Aqui está a explicação:<p>
+
+<p>site:www.foo.com: Este operador restringe a pesquisa para resultados apenas do site especificado, neste caso, "www.foo.com". Isso significa que os resultados retornados serão páginas que pertencem ao domínio "www.foo.com".
+</p>
+<p>
+intitle:penetration testing: Este operador restringe a pesquisa para resultados que contenham o termo "penetration testing" no título da página. Isso significa que os resultados retornados serão páginas que têm "penetration testing" como parte do título.
+</p>
+<p>
+Portanto, o comando site:www.foo.com intitle:penetration testing retorna resultados da pesquisa do Google que são páginas dentro do site "www.foo.com" e que têm "penetration testing" como parte do título. Isso é útil para encontrar páginas específicas dentro de um site que sejam relevantes para o teste de penetração.
+</p>
+<pre>site:www.foo.com intext:"penetration testing"</pre>
+<p>
+Intext: Você pode usar o operador intext: para pesquisar por páginas que contenham um termo específico no corpo do texto. Por exemplo: site:www.foo.com intext:"penetration testing" retornaria páginas do site www.foo.com que contêm a frase "penetration testing" no texto.
+</p>
+<pre>
+site:www.foo.com filetype:pdf
+</pre>
+<p>
+Filetype: Se você estiver interessado em encontrar arquivos específicos hospedados no site, como documentos PDF ou arquivos do Microsoft Word, pode usar o operador filetype:. Por exemplo: site:www.foo.com filetype:pdf retornaria todos os arquivos PDF hospedados no site www.foo.com.
+</p>
+<pre>
+site:www.foo.com inurl:certifications
+</pre>
+<p>
+Inurl: O operador inurl: permite pesquisar por URLs que contenham um termo específico. Por exemplo: site:www.foo.com inurl:certifications retornaria páginas do site www.foo.com onde "certifications" está incluído na URL.
+</p>
+<pre>
+related:www.foo.com
+</pre>
+<p>
+Related: O operador related: pode ser usado para encontrar sites relacionados ao site de interesse. Por exemplo: related:www.foo.com retornaria uma lista de sites que o Google considera relacionados ao www.foo.com.
+</p>
+<pre>
+site:www.foo.com inurl:admin
+</pre>
+
+ocê pode usar o operador inurl: para procurar por URLs que contenham esses padrões. Por exemplo: site:www.foo.com inurl:admin ou site:www.foo.com inurl:login.
+</p>
+<pre>
+site:www.foo.com intitle:admin
+</pre>
+
+
+<p>
+Além disso, você pode tentar pesquisar por palavras-chave específicas que geralmente estão associadas a páginas de administração, como "admin", "login", "painel", "administração", etc. Você pode usar o operador intitle: para procurar por essas palavras-chave no título da página. Por exemplo: site:www.foo.com intitle:admin ou site:www.foo.com intitle:login.
+</p>
+<pre>
+site:www.foo.com filetype:php
+</pre>
+<p>
+Isso irá retornar todos os arquivos com extensão ".php" que estão hospedados no site www.foo.com. Você pode ajustar o domínio conforme necessário para o site que você está interessado em pesquisar.
+</p>
+<pre>
+site:www.foo.com inurl:?
+</pre>
+<p>
+Isso retornará páginas do site www.foo.com que contenham parâmetros de consulta na URL. Isso pode ajudá-lo a identificar páginas que aceitam entrada de parâmetros, como páginas de pesquisa, páginas de resultados de pesquisa filtrados, etc.
+</p>
+<pre>
+site:www.foo.com inurl:form intext:input filetype:php
+</pre>
+<p>
+Este comando de pesquisa irá retornar páginas no site www.foo.com que contenham "form" na URL (indicando que é uma página com um formulário), que também contenham "input" no texto da página (indicando campos de entrada), e que tenham a extensão ".php" (indicando que é um arquivo PHP, que geralmente é usado para processar formulários).
+
+Essa é uma abordagem ampla e pode retornar uma variedade de páginas com formulários e campos de entrada. Você pode ajustar os termos de pesquisa conforme necessário para refinar os resultados de acordo com suas necessidades específicas.
+</p>
+<pre>site:www.foo.com inurl:include.php?file=
+</pre>
+<p>
+Este comando procuraria por páginas em www.foo.com que incluam arquivos externos usando um parâmetro file na URL e você pode tentar manipular esse parâmetro para incluir arquivos arbitrários.
+</p>
+<pre>site:www.foo.com inurl:/admin
+</pre>
+</div>
+</body>
+</html>
